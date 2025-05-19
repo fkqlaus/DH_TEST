@@ -5,7 +5,7 @@
   <artifactId>test</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>controller.LoginController Maven Webapp</name>
+  <name>www.guest.LoginController Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -31,6 +31,6 @@
         <version>3.13.0</version>
       </plugin>
     </plugins>
-    <finalName>controller.LoginController</finalName>
+    <finalName>www.guest.LoginController</finalName>
   </build>
 </project>

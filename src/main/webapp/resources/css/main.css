@@ -1,0 +1,10 @@
+.nav-item.active .nav-link {
+    font-weight: bold;
+    color: #0056b3;
+}
+.navbar-toggler {
+    border-color: #007bff;
+}
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml,...'); /* 커스텀 아이콘 */
+}
