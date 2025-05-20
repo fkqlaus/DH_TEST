@@ -22,7 +22,7 @@
                     <form action="/login" method="post">
                         <div class="form-group">
                             <label for="userId">아이디</label>
-                            <input type="text" id="username" name="username" class="form-control" required>
+                            <input type="text" id="userId" name="userId" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="password">비밀번호</label>
