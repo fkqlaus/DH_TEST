@@ -39,8 +39,13 @@ public class LoginController {
         return "redirect:/login?error=true";
     }
 
+    @GetMapping("/logout")
+    public String logOut(HttpSession session) {
+        session.invalidate();
 
-
+        // 메인 페이지로 리다이렉트
+        return "redirect:/";
+    }
 
 
 }

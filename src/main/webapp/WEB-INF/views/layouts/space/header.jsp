@@ -65,7 +65,7 @@
               <li class="nav-item"><a href="/admin" class="nav-link px-3">관리페이지</a></li>
             </c:if>
             <li class="nav-item">
-              <form action="/logout" method="post" style="margin: 0; padding: 0;">
+              <form action="/logout" method="get" style="margin: 0; padding: 0;">
                 <button type="submit" class="nav-link px-3" style="background: none; border: none; width: 100%; text-align: left;">
                   Logout
                 </button>

@@ -14,12 +14,5 @@ public class MainController {
         return "/main/main"; // main.html로 이동
     }
 
-    @PostMapping("/logout")
-    public String logOut(HttpSession session) {
-        session.invalidate();
 
-        // 메인 페이지로 리다이렉트
-        return "redirect:/";
-
-    }
 }
