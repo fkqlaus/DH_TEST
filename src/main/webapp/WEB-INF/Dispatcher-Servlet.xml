@@ -13,7 +13,7 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <context:component-scan base-package="www" />
+    <context:component-scan base-package="controller" />
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/" />
 

@@ -1,76 +1,53 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 25. 5. 16.
-  Time: 오전 11:41
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>메인</title>
-
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/resources/css/bootstrap.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/resources/css/main.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class="d-flex flex-column min-vh-100">
-<header class="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">메인 페이지</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">홈</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">게시판1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">문의하기</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">로그아웃</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-<main class="container-fluid mt-4" role="main"  >
-    <div class="row">
-        <div class="col-md-2 border-right d-flex flex-column" style="min-height: 100vh;">
-            <div class="list-group flex-grow-1">
-                <c:choose>
-                    <c:when test="${not empty menuList}">
-                        <c:forEach var="menu" items="${menuList}">
-                            <a href="${menu.link}" class="list-group-item list-group-item-action">${menu.name}</a>
-                        </c:forEach>
-                    </c:when>
+<!-- Header -->
+<c:import url="/WEB-INF/views/layouts/space/header.jsp" />
 
-                </c:choose>
-            </div>
-        </div>
-        <div class="col-md-7 ml-5">
-            <h2>게시판</h2>
-            <p>여기에 메인 콘텐츠를 추가하세요.</p>
+<main class="flex-grow-1">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 메인 콘텐츠 -->
+            <section class="col-md-10 py-4 mx-auto min-vh-90">
+                <div class="card shadow-sm h-100" style="min-height: 1400px;">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">게시판</h2>
+                        <p class="card-text">여기에 메인 콘텐츠를 추가하세요.</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </main>
 
 <!-- Footer -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/layouts/space/footer.jsp" />
+
+<script>
+    $(document).ready(function() {
+        $('.nav-item.dropdown').hover(function() {
+            $(this).addClass('show');
+            $(this).find('.dropdown-menu').addClass('show');
+        }, function() {
+            $(this).removeClass('show');
+            $(this).find('.dropdown-menu').removeClass('show');
+        });
+    });
+</script>
 
 </body>
 </html>

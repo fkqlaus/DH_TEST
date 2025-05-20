@@ -21,7 +21,7 @@
                     <h2 class="text-center mb-4">로그인</h2>
                     <form action="/login" method="post">
                         <div class="form-group">
-                            <label for="username">아이디</label>
+                            <label for="userId">아이디</label>
                             <input type="text" id="username" name="username" class="form-control" required>
                         </div>
                         <div class="form-group">
@@ -88,7 +88,7 @@
     }
 </script>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/layouts/space/footer.jsp" />
 
 
 </body>
