@@ -13,12 +13,11 @@
         <!-- 드롭다운 메뉴들 -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="featuresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Features
+            게시판
           </a>
           <div class="dropdown-menu" aria-labelledby="featuresDropdown">
-            <a class="dropdown-item" href="#">Feature 1</a>
-            <a class="dropdown-item" href="#">Feature 2</a>
-            <a class="dropdown-item" href="#">Feature 3</a>
+            <a class="dropdown-item" href="/board/list">공지사항</a>
+            <a class="dropdown-item" href="/board/list">자유게시판</a>
           </div>
         </li>
         <!-- 이하 동일하게 Pricing, FAQs, About 등 추가 -->
