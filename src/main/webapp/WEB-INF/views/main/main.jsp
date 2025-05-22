@@ -11,9 +11,37 @@
 
 <main class="flex-grow-1">
     <div class="container-fluid">
+        <!-- 공지사항 영역 -->
+        <div class="notice-wrap" style="text-align: center;">
+            <p>공지사항</p>
+            <ul class="bxslider">
+                <li>
+                    <a href="#">
+                        <p class="titleP">2023-06-19 1111</p>
+                        <input type="hidden" value="공지사항 내용">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p class="titleP">2023-06-14 2222</p>
+                        <input type="hidden" value="ttts">
+
+                    </a>
+                </li>
+                <!-- 추가 공지사항 -->
+            </ul>
+        </div>
+        <div class="slider_wrap">
+            <ul class="my_bxslider" >
+                <li><img src="/resources/images/image1.jpg" alt="이미지1"/></li>
+                <li><img src="/resources/images/image2.jpg" alt="이미지2"/></li>
+                <li><img src="/resources/images/image3.jpg" alt="이미지3"/></li>
+            </ul>
+        </div>
         <div class="row">
+
             <!-- 메인 콘텐츠 -->
-            <section class="col-md-10 py-4 mx-auto min-vh-90">
+            <section class="col-md-10 py-4 mx-auto">
                 <div class="card shadow-sm h-100" style="min-height: 1400px;">
                     <div class="card-body">
                         <div class="row">
@@ -55,14 +83,42 @@
         });
     });
 </script>
+<!-- 슬라이더 초기화 -->
+<script>
+    $(document).ready(function(){
+        $('.bxslider').bxSlider({
+            mode: 'vertical',
+            auto: true,
+            pager: false,
+            controls: true,
+            minSlides: 1,
+            maxSlides: 1,
+            moveSlides: 1,
+            slideMargin: 0,
+            speed: 500,
+            pause: 3000
+        });
+    });
+</script>
 
 <!-- ...기존 코드... -->
 
 <!-- Chart.js CDN 추가 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</body>
-</html>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.my_bxslider').bxSlider({
+            controls: false // 양 옆 버튼 제거
+
+        });
+    });
+</script>
+
+
+
 
 </body>
 </html>
+
