@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post")
@@ -35,6 +36,13 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+
+    @PrePersist
+    protected void onCreate() {
+        postDate = LocalDate.from(LocalDateTime.now());
+    }
+
 
 
 }

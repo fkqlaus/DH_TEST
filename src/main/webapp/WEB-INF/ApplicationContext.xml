@@ -16,13 +16,16 @@
     <!-- 컴포넌트 스캔 범위 확장 -->
     <context:component-scan base-package="controller, db" />
 
-    <!-- DataSource 설정 -->
+    <context:property-placeholder location="classpath:config.properties"/>
+
+    <!-- DataSource 설정 수정 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/notice"/>
-        <property name="username" value="postgres"/>
-        <property name="password" value="0000"/>
+        <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
     </bean>
+
 
     <!-- JPA EntityManagerFactory 설정 -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -33,13 +36,14 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">${spring.jpa.properties.hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${spring.jpa.show-sql}</prop>
+                <prop key="hibernate.format_sql">${spring.jpa.format-sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>
             </props>
         </property>
     </bean>
+
 
     <!-- Transaction Manager 설정 -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

@@ -1,4 +1,4 @@
-package controller.Board;
+package controller.board;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
