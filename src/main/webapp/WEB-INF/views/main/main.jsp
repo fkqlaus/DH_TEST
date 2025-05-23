@@ -31,9 +31,15 @@
                 <!-- 추가 공지사항 -->
             </ul>
         </div>
-        <div class="slider_wrap">
-            <ul class="my_bxslider" >
-                <li><img src="/resources/images/image1.jpg" alt="이미지1"/></li>
+        <div class="slider_wrap" style="display: flex; justify-content: center;">
+            <ul class="my_bxslider" style="display: inline-block;">
+                <li>
+                    <a href="/board/list" class="img-text-wrap">
+                        <img src="/resources/images/image1.jpg" alt="이미지1"/>
+                        <span class="img-caption">글자를 올려봤습니다</span>
+                    </a>
+                </li>
+
                 <li><img src="/resources/images/image2.jpg" alt="이미지2"/></li>
                 <li><img src="/resources/images/image3.jpg" alt="이미지3"/></li>
             </ul>
@@ -87,16 +93,16 @@
 <script>
     $(document).ready(function(){
         $('.bxslider').bxSlider({
-            mode: 'vertical',
-            auto: true,
-            pager: false,
-            controls: true,
-            minSlides: 1,
-            maxSlides: 1,
-            moveSlides: 1,
-            slideMargin: 0,
-            speed: 500,
-            pause: 3000
+            mode: 'vertical',      // 슬라이드 전환 방향: 'horizontal'(기본값), 'vertical', 'fade'
+            auto: true,            // 자동 슬라이드 재생 여부
+            pager: false,          // 하단 페이지 네비게이션(점) 표시 여부
+            controls: true,        // 이전/다음 화살표 버튼 표시 여부
+            minSlides: 1,          // 한 화면에 보여질 최소 슬라이드 개수
+            maxSlides: 1,          // 한 화면에 보여질 최대 슬라이드 개수
+            moveSlides: 1,         // 한 번에 이동할 슬라이드 개수
+            slideMargin: 0,        // 슬라이드 사이의 간격(px)
+            speed: 500,            // 슬라이드 전환 속도(ms)
+            pause: 3000            // 자동 슬라이드 시 각 슬라이드가 머무는 시간(ms)
         });
     });
 </script>
@@ -110,11 +116,16 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.my_bxslider').bxSlider({
-            controls: false // 양 옆 버튼 제거
+            controls: false, // 양 옆 버튼 제거
+            touchEnabled : false, // 이걸 fasle로 해야 클릭시 링크로 이동 대신 드래그로 슬라이드 안됨
+            auto: true,
+            slideWidth: 600      // 슬라이드의 너비(px)
+
 
         });
     });
 </script>
+
 
 
 

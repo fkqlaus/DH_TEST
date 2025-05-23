@@ -59,16 +59,40 @@
 
 
 
+    <!-- Spring Data JPA -->
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
-      <version>3.1.2</version>
+      <version>2.7.14</version>  <!-- Spring 5.3.x와 호환되는 버전 -->
     </dependency>
+
+    <!-- Hibernate -->
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.2.7.Final</version>
+      <version>5.6.15.Final</version>  <!-- Spring Data JPA 2.7.x와 호환되는 버전 -->
     </dependency>
+
+    <!-- Spring ORM -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>5.3.30</version>  <!-- Spring 버전과 동일하게 -->
+    </dependency>
+
+    <!-- JPA API -->
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>javax.persistence-api</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.14</version>
+     </dependency>
 
 
 

@@ -1,8 +1,9 @@
 package common.converter;
 
 import db.user.entity.Role;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 @Converter
 public class RoleConverter implements AttributeConverter<Role, Integer> {

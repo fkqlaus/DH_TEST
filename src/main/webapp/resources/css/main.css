@@ -82,4 +82,50 @@ ul.main-menu-wrap li a.on {
     background: #e3e8fa;
     color: #0056b3;
 }
+/* main.css에 추가 또는 수정 */
+.slider_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 32px 0;
+}
+.my_bxslider {
+    /* bxSlider가 내부적으로 width를 제어하므로 별도 스타일 불필요 */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.my_bxslider img {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
 
+<!-- 이미지 위에 글자 올리기 -->
+.img-text-wrap {
+    position: relative;
+    display: block;
+}
+.img-text-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.img-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%; /* 중앙 정렬 */
+    transform: translateY(-50%);
+    color: #000000;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 0 0 12px 12px;
+    pointer-events: none; /* 클릭 방해 방지 */
+}

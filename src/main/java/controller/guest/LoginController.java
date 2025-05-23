@@ -1,5 +1,8 @@
 package controller.guest;
 
+import db.user.entity.User;
+import db.user.setup.UserSetup;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,15 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Controller
 public class LoginController {
 
-    private static final Map<String, String> USERS = new HashMap<>();
-    static {
-        // 테스트용 계정 추가
-        USERS.put("admin", "123");
-        USERS.put("user", "123");
-    }
+    private final UserSetup userSetup;
+
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -28,8 +28,11 @@ public class LoginController {
     public String processLogin(@RequestParam String userId,
                                @RequestParam String password,
                                HttpSession session) {
+
+        userSetup.createAdminUser();
+
         // 사용자 인증
-        if (USERS.containsKey(userId) && USERS.get(userId).equals(password)) {
+        if (userId.equals("admin") && password.equals("123")) {
             // 로그인 성공
             session.setAttribute("userId", userId);
             session.setAttribute("userRole", userId.equals("admin") ? "ADMIN" : "USER");
