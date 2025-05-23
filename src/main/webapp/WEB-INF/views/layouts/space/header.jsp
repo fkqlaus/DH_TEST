@@ -16,8 +16,8 @@
             게시판
           </a>
           <div class="dropdown-menu" aria-labelledby="featuresDropdown">
-            <a class="dropdown-item" href="/board/list">공지사항</a>
-            <a class="dropdown-item" href="/board/list">자유게시판</a>
+            <a class="dropdown-item" href="/posts/list">공지사항</a>
+            <a class="dropdown-item" href="/posts/list">자유게시판</a>
           </div>
         </li>
         <!-- 이하 동일하게 Pricing, FAQs, About 등 추가 -->
@@ -60,7 +60,7 @@
             <li class="nav-item"><a href="/signup" class="nav-link px-3">Sign up</a></li>
           </c:when>
           <c:otherwise>
-            <c:if test="${sessionScope.userRole eq 'ADMIN'}">
+            <c:if test="${sessionScope.userRole eq 'ROLE_ADMIN'}">
               <li class="nav-item"><a href="/admin" class="nav-link px-3">관리페이지</a></li>
             </c:if>
             <li class="nav-item">

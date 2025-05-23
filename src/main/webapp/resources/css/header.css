@@ -60,4 +60,7 @@
     margin: 0.5rem 0;
     background-color: rgba(0, 0, 0, 0.1); /* 구분선 색상 */
 }
+.dropdown-menu {
+    margin-top: 0 !important;
+}
 
