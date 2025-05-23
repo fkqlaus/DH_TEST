@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+  <link rel="icon" type="image/png" href="/resources/favicon.gif">
   <!-- jQuery first, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
@@ -24,6 +25,8 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
   <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
 
 <%--  <script src="${pageContext.request.contextPath}/resources/js/chart_test2.js"></script>--%>
 

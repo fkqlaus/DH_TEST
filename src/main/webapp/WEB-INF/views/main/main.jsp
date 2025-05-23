@@ -34,7 +34,7 @@
         <div class="slider_wrap" style="display: flex; justify-content: center;">
             <ul class="my_bxslider" style="display: inline-block;">
                 <li>
-                    <a href="/board/list" class="img-text-wrap">
+                    <a href="/posts/list" class="img-text-wrap">
                         <img src="/resources/images/image1.jpg" alt="이미지1"/>
                         <span class="img-caption">글자를 올려봤습니다</span>
                     </a>
