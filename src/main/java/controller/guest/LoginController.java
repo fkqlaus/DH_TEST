@@ -2,6 +2,7 @@ package controller.guest;
 
 import db.user.dto.UserDto;
 import db.user.service.UserService;
+import db.user.setup.UserSetup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     private final UserService userService;
+    private final UserSetup userSetup;
 
     @GetMapping("/login")
     public String showLoginPage(HttpServletRequest request, HttpSession session) {
@@ -32,7 +34,8 @@ public class LoginController {
                              @RequestParam String password,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) {
-        
+
+        userSetup.createAdminUser();
         UserDto userDto = userService.authenticate(userId, password);
         
         if (userDto != null) {

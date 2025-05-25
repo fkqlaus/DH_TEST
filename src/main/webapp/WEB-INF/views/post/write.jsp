@@ -26,8 +26,9 @@
                 <label for="category" class="form-label">카테고리</label>
                 <select class="form-select" id="category" name="category" required>
                     <option value="">카테고리 선택</option>
-                    <option value="NOTICE">공지사항</option>
-                    <option value="FREE">자유게시판</option>
+                    <c:forEach var="category" items="${categories}">
+                        <option value="${category.id}">${category.categoryName}</option>
+                    </c:forEach>
                 </select>
             </div>
 
