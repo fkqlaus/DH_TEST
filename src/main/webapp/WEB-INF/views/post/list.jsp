@@ -23,7 +23,7 @@
                                 <button type="submit" class="btn btn-primary">검색</button>
                             </form>
 
-                            <c:if test="${sessionScope.userId != null}">
+                            <c:if test="${pageContext.request.userPrincipal != null}">
                                 <a href="/posts/write" class="btn btn-success float-end">글쓰기</a>
                             </c:if>
                         </div>

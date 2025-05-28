@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <html>
 <c:import url="/WEB-INF/views/layouts/space/head.jsp" />
@@ -27,11 +29,19 @@
                         <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-secondary" onclick="location.href='/posts/list'">목록으로</button>
                             <div>
-                                <c:if test="${sessionScope.userId == post.user.userId}">
-                                    <a href="/posts/edit?postId=${post.postId}" class="btn btn-primary">수정</a>
-                                    <a href="/posts/delete?postId=${post.postId}" class="btn btn-danger"
-                                       onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
-                                </c:if>
+                                <c:set var="isOwner" value="${pageContext.request.userPrincipal.name == post.user.userId}" />
+                                <sec:authorize access="hasRole('ROLE_ADMIN') or #isOwner">
+                                    <c:if test="${isOwner or pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                                        <form id="updateForm" style="display:inline;">
+                                            <input type="hidden" name="postId" value="${post.postId}">
+                                            <button type="button" class="btn btn-danger" onclick="updatePost();">수정</button>
+                                        </form>
+                                        <form id="deleteForm" style="display:inline;">
+                                            <input type="hidden" name="postId" value="${post.postId}">
+                                            <button type="button" class="btn btn-danger" onclick="if(confirm('정말 삭제하시겠습니까?')) deletePost();">삭제</button>
+                                        </form>
+                                    </c:if>
+                                </sec:authorize>
                             </div>
                         </div>
                     </div>
@@ -44,5 +54,45 @@
 <!-- Footer -->
 <c:import url="/WEB-INF/views/layouts/space/footer.jsp" />
 
+
+<script>
+    function deletePost() {
+        const form = document.getElementById('deleteForm');
+        const postId = form.postId.value;
+        fetch('/api/posts?postId=' + encodeURIComponent(postId), {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(res => {
+            if (res.status === 204) {
+                alert('삭제되었습니다.');
+                location.href = '/posts/list';
+            } else {
+                alert('삭제 실패');
+            }
+        });
+    }
+</script>
+
+<script>
+    function updatePost() {
+        const form = document.getElementById('updateForm');
+        const postId = form.postId.value;
+        fetch('/api/posts?postId=' + encodeURIComponent(postId), {
+            method: 'PUT',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(res => {
+            if (res.status === 201) {
+                alert('수정 되었습니다.');
+                location.href = '/posts/list';
+            } else {
+                alert('수정 실패');
+            }
+        });
+    }
+</script>
 </body>
 </html>

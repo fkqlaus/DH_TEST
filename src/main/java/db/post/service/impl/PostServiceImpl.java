@@ -1,5 +1,6 @@
 package db.post.service.impl;
 
+import db.category.service.CategoryService;
 import db.post.dto.PostDto;
 import db.post.entity.Post;
 import db.post.repository.PostRepository;
@@ -7,11 +8,13 @@ import db.post.service.PostService;
 import db.user.entity.User;
 import db.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -19,6 +22,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final UserService userService;
+    private final CategoryService categoryService;
 
     @Override
     public Page<Post> findPosts(String searchTitle, Pageable pageable) {
@@ -36,8 +40,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post savePost(PostDto post) {
-        return postRepository.save(convertToEntity(post));
+    public PostDto savePost(PostDto post) {
+        return convertToDto(postRepository.save(convertToEntity(post)));
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto) {
+        Post post = postRepository.findById(postDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + postDto.getId()));
+        post.setPostTitle(postDto.getTitle());
+        post.setPost(postDto.getPost());
+        post.setPostDate(postDto.getPostDate());
+        post.setCategory(categoryService.findById(postDto.getCategoryId()));
+        post.setUser(userService.findById(postDto.getUserId()));
+
+        log.info("Post 수정 - ID: {}, Title: {}, USER-ID: {}", post.getPostId(), post.getPostTitle(), post.getUser().getUserId());
+
+        return convertToDto(postRepository.save(post));
+
     }
 
 
@@ -63,10 +83,13 @@ public class PostServiceImpl implements PostService {
         post.setPostTitle(postDto.getTitle());
         post.setPost(postDto.getPost());
         post.setPostDate(postDto.getPostDate());
+        post.setCategory(categoryService.findById(postDto.getCategoryId()));
         // userId는 User 엔티티와 연관관계가 설정되어 있어야 함
         // 예를 들어, User user = userRepository.findById(postDto.getUserId()).orElse(null);
         // post.setUser(user);
-        post.setUser(userService.findById(postDto.getUserId()));;
+        post.setUser(userService.findById(postDto.getUserId()));
+
+        log.info("Post 생성 - ID: {}, Title: {}, USER-ID: {}", post.getPostId(), post.getPostTitle(),post.getUser().getUserId());
 
         return post;
     }

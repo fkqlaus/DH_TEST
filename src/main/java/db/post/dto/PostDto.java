@@ -18,5 +18,8 @@ public class PostDto {
     private String post;
     private String userId;
     private LocalDate postDate;
+    private Long categoryId;
+    private String imageId;
+
 
 }

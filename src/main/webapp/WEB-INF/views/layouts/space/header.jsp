@@ -55,16 +55,17 @@
       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       <ul class="navbar-nav flex-row order-1">
         <c:choose>
-          <c:when test="${empty sessionScope.userId}">
+          <c:when test="${pageContext.request.userPrincipal == null}">
             <li class="nav-item"><a href="/login" class="nav-link px-3">Login</a></li>
             <li class="nav-item"><a href="/signup" class="nav-link px-3">Sign up</a></li>
           </c:when>
           <c:otherwise>
-            <c:if test="${sessionScope.userRole eq 'ROLE_ADMIN'}">
-              <li class="nav-item"><a href="/admin" class="nav-link px-3">관리페이지</a></li>
-            </c:if>
+            <%-- 관리자 권한 체크는 Security 태그라이브러리 사용 권장 --%>
             <li class="nav-item">
-              <form action="/logout" method="get" style="margin: 0; padding: 0;">
+              <span class="nav-link px-3">${pageContext.request.userPrincipal.name}님</span>
+            </li>
+            <li class="nav-item">
+              <form action="/logout" method="post" style="margin: 0; padding: 0;">
                 <button type="submit" class="nav-link px-3" style="background: none; border: none; width: 100%; text-align: left;">
                   Logout
                 </button>

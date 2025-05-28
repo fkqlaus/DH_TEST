@@ -1,5 +1,8 @@
 package db.post.entity;
 
+import db.category.entity.Category;
+import db.comment.entity.Comment;
+import db.post_image.entity.Post_image;
 import db.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,8 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -37,12 +42,20 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post_image> postImages = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
         postDate = LocalDate.from(LocalDateTime.now());
     }
-
 
 
 }
