@@ -19,7 +19,7 @@
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="text-center mb-4">로그인</h2>
-                    <form action="/login" method="post">
+                    <form>
                         <div class="form-group">
                             <label for="userId">아이디</label>
                             <input type="text" id="userId" name="userId" class="form-control" required>
@@ -78,18 +78,70 @@
     </div>
 </div>
 
-<!-- ✅ Bootstrap JS & jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
     function openRegisterModal() {
         $('#registerModal').modal('show');
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const userId = document.getElementById("userId").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!userId || !password) {
+                alert("아이디와 비밀번호를 입력해주세요.");
+                return;
+            }
+
+            fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    password: password
+                })
+            })
+                .then(res => {
+                    if (res.ok) {
+                        // 로그인 성공
+                        const redirectAfterLogin = '<%= session.getAttribute("redirectAfterLogin") != null ? session.getAttribute("redirectAfterLogin") : "/" %>';
+                        window.location.href = redirectAfterLogin;
+
+                    } else {
+                        // 로그인 실패
+                        showError("아이디 또는 비밀번호가 잘못되었습니다.");
+                    }
+                })
+                .catch(() => {
+                    showError("서버 오류가 발생했습니다.");
+                });
+        });
+
+        function showError(msg) {
+            let alertDiv = document.querySelector(".alert-danger");
+            if (!alertDiv) {
+                alertDiv = document.createElement("div");
+                alertDiv.className = "alert alert-danger mt-3";
+                alertDiv.setAttribute("role", "alert");
+                form.parentNode.appendChild(alertDiv);
+            }
+            alertDiv.textContent = msg;
+        }
+    });
+</script>
 
 <jsp:include page="/WEB-INF/views/layouts/space/footer.jsp" />
-
+<!-- ✅ Bootstrap JS & jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/axios.min.js"></script>
 
 </body>
 </html>

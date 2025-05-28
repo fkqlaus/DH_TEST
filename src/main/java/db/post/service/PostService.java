@@ -10,7 +10,7 @@ public interface PostService {
 
     Page<Post> findPosts(String searchTitle, Pageable pageable);
     Post getPostById(Long id);
-    Post savePost(PostDto post);
+    PostDto savePost(PostDto post);
     void deletePost(Long id);
 
 }

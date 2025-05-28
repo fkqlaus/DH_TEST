@@ -11,7 +11,7 @@
     <div class="container mt-5">
         <h2 class="mb-4">게시글 작성</h2>
         
-        <form action="/posts/write" method="post">
+        <form>
             <div class="mb-3">
                 <label for="title" class="form-label">제목</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -22,20 +22,17 @@
                 <textarea class="form-control" id="summernote" name="post" rows="10" required></textarea>
             </div>
 
-            <div class="mb-3">
-                <label for="category" class="form-label">카테고리</label>
-                <select class="form-select" id="category" name="category" required>
-                    <option value="">카테고리 선택</option>
-                    <c:forEach var="category" items="${categories}">
-                        <option value="${category.id}">${category.categoryName}</option>
-                    </c:forEach>
-                </select>
-            </div>
+            <select class="form-select" id="category" name="categoryId" required>
+                <option value="">카테고리 선택</option>
+                <c:forEach var="category" items="${categories}">
+                    <option value="${category.id}">${category.categoryName}</option>
+                </c:forEach>
+            </select>
 
             <div class="d-flex justify-content-between mt-4">
                 <button type="button" class="btn btn-secondary" onclick="location.href='/posts/list'">목록으로</button>
                 <div>
-                    <button type="submit" class="btn btn-primary">작성완료</button>
+                    <button type="button" id="submitBtn" class="btn btn-primary">작성완료</button>
                 </div>
             </div>
         </form>
@@ -94,35 +91,61 @@
             });
         }
 
-        // 폼 제출 전 유효성 검사
-        $('form').on('submit', function(e) {
-            const title = $('#title').val().trim();
+        // fetch로 폼 제출
+        document.getElementById('submitBtn').addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value.trim();
             const content = $('#summernote').summernote('isEmpty');
-            const category = $('#category').val();
+            const post = $('#summernote').summernote('code');
+            const categoryId = document.getElementById('category').value;
 
             if (!title) {
                 alert('제목을 입력해주세요.');
-                $('#title').focus();
-                e.preventDefault();
-                return false;
+                document.getElementById('title').focus();
+                return;
             }
-
             if (content) {
                 alert('내용을 입력해주세요.');
                 $('#summernote').summernote('focus');
-                e.preventDefault();
-                return false;
+                return;
             }
-
-            if (!category) {
+            if (!categoryId) {
                 alert('카테고리를 선택해주세요.');
-                $('#category').focus();
-                e.preventDefault();
-                return false;
+                document.getElementById('category').focus();
+                return;
             }
 
-            return true;
+            const formData = {
+                title: title,
+                post: post,
+                categoryId: categoryId
+            };
+
+            try {
+                const response = await fetch('/api/posts/write', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    window.location.href = '/posts/detail?postId=' + data.id;
+                } else {
+                    alert('게시글 저장에 실패했습니다.');
+                }
+            } catch (err) {
+                alert('오류가 발생했습니다.');
+            }
         });
     </script>
+
+
+
+
+
 </body>
 </html>
