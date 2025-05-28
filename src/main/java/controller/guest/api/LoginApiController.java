@@ -20,20 +20,7 @@ public class LoginApiController {
     private final UserService userService;
     private final UserSetup userSetup;
 
-    @PostMapping("/login")
-    public ResponseEntity<Void> processLogin(@RequestBody LoginDto loginDto,
-                                       HttpSession session) {
-        userSetup.createAdminUser();
-        UserDto userDto = userService.authenticate(loginDto.getUserId(), loginDto.getPassword());
 
-
-            session.setAttribute("userId", userDto.getId());
-            session.setAttribute("userName", userDto.getUserName());
-            session.setAttribute("userRole", userDto.getRole().getValue());
-
-
-        return ResponseEntity.ok().build();
-    }
 
 
 }

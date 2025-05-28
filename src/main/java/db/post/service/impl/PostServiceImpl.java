@@ -44,6 +44,22 @@ public class PostServiceImpl implements PostService {
         return convertToDto(postRepository.save(convertToEntity(post)));
     }
 
+    @Override
+    public PostDto updatePost(PostDto postDto) {
+        Post post = postRepository.findById(postDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + postDto.getId()));
+        post.setPostTitle(postDto.getTitle());
+        post.setPost(postDto.getPost());
+        post.setPostDate(postDto.getPostDate());
+        post.setCategory(categoryService.findById(postDto.getCategoryId()));
+        post.setUser(userService.findById(postDto.getUserId()));
+
+        log.info("Post 수정 - ID: {}, Title: {}, USER-ID: {}", post.getPostId(), post.getPostTitle(), post.getUser().getUserId());
+
+        return convertToDto(postRepository.save(post));
+
+    }
+
 
     @Override
     @Transactional

@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <!-- 컴포넌트 스캔 범위 확장 -->
-    <context:component-scan base-package="controller, db" />
+    <context:component-scan base-package="controller, db, common, common.security" />
 
     <context:property-placeholder location="classpath:config.properties"/>
 

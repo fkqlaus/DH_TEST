@@ -21,12 +21,17 @@ public class LoginController {
     private final UserSetup userSetup;
 
 
+//    @GetMapping("/login")
+//    public String showLoginPage(HttpServletRequest request, HttpSession session) {
+//        String referer = request.getHeader("Referer");
+//        if (referer != null && !referer.contains("/login")) {
+//            session.setAttribute("redirectAfterLogin", referer);
+//        }
+//        return "/guest/login";
+//    }
+
     @GetMapping("/login")
-    public String showLoginPage(HttpServletRequest request, HttpSession session) {
-        String referer = request.getHeader("Referer");
-        if (referer != null && !referer.contains("/login")) {
-            session.setAttribute("redirectAfterLogin", referer);
-        }
+    public String loginForm() {
         return "/guest/login";
     }
 
