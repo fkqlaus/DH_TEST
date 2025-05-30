@@ -26,8 +26,8 @@
                             <c:out value="${post.post}" escapeXml="false"/>
                         </div>
                         <hr>
+                        <!-- 게시글 본문 및 버튼 영역 (생략) -->
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" onclick="goToList()">목록으로</button>
                             <div>
                                 <c:set var="isOwner" value="${pageContext.request.userPrincipal.name == post.userId}" />
                                 <sec:authorize access="hasRole('ROLE_ADMIN') or #isOwner">
@@ -44,6 +44,36 @@
                                 </sec:authorize>
                             </div>
                         </div>
+                        <!-- 댓글 영역 시작 -->
+                        <div class="mt-4">
+                            <h5 class="mb-3">댓글</h5>
+                            <ul class="list-group mb-3">
+                                <c:forEach var="comment" items="${comments}">
+                                    <li class="list-group-item">
+                                        <strong>${comment.author}</strong>
+                                        <span class="text-muted small">(${comment.createdDate})</span>
+                                        <div>${comment.content}</div>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${empty comments}">
+                                    <li class="list-group-item text-muted">아직 댓글이 없습니다.</li>
+                                </c:if>
+                            </ul>
+                            <sec:authorize access="isAuthenticated()">
+                                <form action="/comments" method="post" class="d-flex gap-2">
+                                    <input type="hidden" name="postId" value="${post.postId}" />
+                                    <input type="text" name="content" class="form-control" placeholder="댓글을 입력하세요" required />
+                                    <button type="submit" class="btn btn-primary">댓글 작성</button>
+                                </form>
+                            </sec:authorize>
+                            <sec:authorize access="!isAuthenticated()">
+                                <div class="alert alert-light py-2">댓글을 작성하려면 <a href="/login">로그인</a>이 필요합니다.</div>
+                            </sec:authorize>
+                        </div>
+                        <!-- 댓글 영역 끝 -->
+                        <button type="button" class="btn btn-secondary" onclick="goToList()">목록으로</button>
+
+
                     </div>
                 </div>
             </section>
