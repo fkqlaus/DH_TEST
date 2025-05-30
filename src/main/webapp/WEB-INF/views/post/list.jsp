@@ -48,7 +48,7 @@
                                     <tr>
                                         <td>${post.postId}</td>
                                         <td style="text-align: center; padding-left: 24px; padding-right: 24px;">
-                                            <a href="/posts/detail?postId=${post.postId}">
+                                            <a href="/posts/${post.postId}">
                                                     ${post.postTitle}
                                             </a>
                                         </td>

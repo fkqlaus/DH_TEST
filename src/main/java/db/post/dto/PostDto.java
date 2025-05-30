@@ -13,8 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PostDto {
 
-    private Long id;
-    private String title;
+    private Long postId;
+    private String postTitle;
     private String post;
     private String userId;
     private LocalDate postDate;

@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <h3 class="card-title mb-3">${post.postTitle}</h3>
                         <div class="mb-2 text-muted">
-                            <span>작성자: ${post.user.userId}</span> &nbsp;|&nbsp;
+                            <span>작성자: ${post.userId}</span>
                             <span>작성일: ${post.postDate}</span>
                         </div>
                         <hr>
@@ -27,9 +27,9 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" onclick="location.href='/posts/list'">목록으로</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/posts'">목록으로</button>
                             <div>
-                                <c:set var="isOwner" value="${pageContext.request.userPrincipal.name == post.user.userId}" />
+                                <c:set var="isOwner" value="${pageContext.request.userPrincipal.name == post.userId}" />
                                 <sec:authorize access="hasRole('ROLE_ADMIN') or #isOwner">
                                     <c:if test="${isOwner or pageContext.request.isUserInRole('ROLE_ADMIN')}">
                                         <form id="updateForm" style="display:inline;">
@@ -67,7 +67,7 @@
         }).then(res => {
             if (res.status === 204) {
                 alert('삭제되었습니다.');
-                location.href = '/posts/list';
+                location.href = '/posts';
             } else {
                 alert('삭제 실패');
             }
@@ -79,19 +79,8 @@
     function updatePost() {
         const form = document.getElementById('updateForm');
         const postId = form.postId.value;
-        fetch('/api/posts?postId=' + encodeURIComponent(postId), {
-            method: 'PUT',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        }).then(res => {
-            if (res.status === 201) {
-                alert('수정 되었습니다.');
-                location.href = '/posts/list';
-            } else {
-                alert('수정 실패');
-            }
-        });
+        // 페이지 이동만 하면 됨
+        location.href = '/posts/' + encodeURIComponent(postId) + '/edit';
     }
 </script>
 </body>

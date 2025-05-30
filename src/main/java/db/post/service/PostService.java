@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public interface PostService {
 
     Page<Post> findPosts(String searchTitle, Pageable pageable);
-    Post getPostById(Long id);
+    PostDto getPostById(Long id);
     PostDto savePost(PostDto post);
     void deletePost(Long id);
     PostDto updatePost(PostDto postDto);
