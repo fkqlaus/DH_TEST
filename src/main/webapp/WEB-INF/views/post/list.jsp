@@ -49,7 +49,7 @@
                                     <tr>
                                         <td>${post.postId}</td>
                                         <td style="text-align: center; padding-left: 24px; padding-right: 24px;">
-                                            <a href="/posts/${post.postId}">
+                                            <a href="/posts/${post.postId}?categoryName=${categoryName}">
                                                     ${post.postTitle}
                                             </a>
                                         </td>

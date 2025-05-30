@@ -27,7 +27,7 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" onclick="location.href='/posts'">목록으로</button>
+                            <button type="button" class="btn btn-secondary" onclick="goToList()">목록으로</button>
                             <div>
                                 <c:set var="isOwner" value="${pageContext.request.userPrincipal.name == post.userId}" />
                                 <sec:authorize access="hasRole('ROLE_ADMIN') or #isOwner">
@@ -81,6 +81,29 @@
         const postId = form.postId.value;
         // 페이지 이동만 하면 됨
         location.href = '/posts/' + encodeURIComponent(postId) + '/edit';
+    }
+</script>
+<%--<script>--%>
+<%--    function goToList() {--%>
+<%--        // JSP에서 파라미터 값을 EL로 받아옴 (없으면 빈 문자열)--%>
+<%--        const categoryName = '${categoryName}';--%>
+
+<%--        // 쿼리스트링 조합--%>
+<%--        let url = '/posts?categoryName=' + categoryName--%>
+<%--            // encodeURIComponent(categoryName);--%>
+
+
+<%--        location.href = url;--%>
+<%--        // return url;--%>
+<%--    }--%>
+<%--</script>--%>
+<script>
+    function goToList() {
+        if (document.referrer && document.referrer.includes('/posts')) {
+            location.href = document.referrer;
+        } else {
+            location.href = '/posts';
+        }
     }
 </script>
 </body>
