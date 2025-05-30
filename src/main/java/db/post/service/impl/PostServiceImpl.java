@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,18 +26,18 @@ public class PostServiceImpl implements PostService {
     private final CategoryService categoryService;
 
     @Override
-    public Page<Post> findPosts(String searchTitle, Pageable pageable) {
+    public Page<Post> findPosts(String searchTitle, Pageable pageable, String categoryName) {
 
         if (searchTitle != null && !searchTitle.isEmpty()) {
-            return postRepository.findByPostTitleContaining(searchTitle, pageable);
+//            return postRepository.findByPostTitleContaining(searchTitle, pageable);
+            return postRepository.findByPostTitleContainingAndCategory_CategoryName(searchTitle, categoryName, pageable);
         }
-        return postRepository.findAll(pageable);
+        return postRepository.findByCategory_CategoryName(categoryName, pageable);
     }
 
     @Override
     public PostDto getPostById(Long id) {
         return convertToDto(postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + id)));
-
     }
 
     @Override
@@ -58,6 +60,14 @@ public class PostServiceImpl implements PostService {
         return convertToDto(postRepository.save(post));
 
     }
+
+    @Override
+    public Page<PostDto> findPostsbyCategoryId(Long Id, Pageable pageable) {
+        Page<Post> posts = postRepository.findByCategoryId(Id, pageable);
+
+        return posts.map(this::convertToDto);
+    }
+
 
 
     @Override

@@ -28,13 +28,15 @@ public class PostController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String searchTitle,
+            @RequestParam(required = false) String categoryName,
             Model model) {
 
         PageRequest pageRequest = PageRequest.of(page, size,
                 Sort.by("postId").descending());
 
-        Page<Post> postPage = postService.findPosts(searchTitle, pageRequest);
+        Page<Post> postPage = postService.findPosts(searchTitle, pageRequest, categoryName);
 
+        model.addAttribute("categoryName", categoryName); // 카테고리 이름 유지
         model.addAttribute("posts", postPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", postPage.getTotalPages());

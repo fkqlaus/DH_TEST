@@ -15,20 +15,16 @@
         <div class="notice-wrap" style="text-align: center;">
             <p>공지사항</p>
             <ul class="bxslider">
-                <li>
-                    <a href="#">
-                        <p class="titleP">2023-06-19 1111</p>
-                        <input type="hidden" value="공지사항 내용">
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p class="titleP">2023-06-14 2222</p>
-                        <input type="hidden" value="ttts">
+                <c:forEach var="notice" items="${noticeList}">
+                    <li>
+                        <a href="/posts/${notice.postId}">
 
-                    </a>
-                </li>
-                <!-- 추가 공지사항 -->
+                                    ${notice.postTitle}
+
+                            <input type="hidden" value="${notice.post}"/>
+                        </a>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <div class="slider_wrap" style="display: flex; justify-content: center;">

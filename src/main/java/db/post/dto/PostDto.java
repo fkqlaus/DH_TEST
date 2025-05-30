@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Getter
@@ -17,7 +18,7 @@ public class PostDto {
     private String postTitle;
     private String post;
     private String userId;
-    private LocalDate postDate;
+    private LocalDateTime postDate;
     private Long categoryId;
     private String imageId;
 
