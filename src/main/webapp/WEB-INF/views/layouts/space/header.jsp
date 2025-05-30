@@ -16,8 +16,8 @@
             게시판
           </a>
           <div class="dropdown-menu" aria-labelledby="featuresDropdown">
-            <a class="dropdown-item" href="/posts/list">공지사항</a>
-            <a class="dropdown-item" href="/posts/list">자유게시판</a>
+            <a class="dropdown-item" href="/posts?categoryName=공지사항">공지사항</a>
+            <a class="dropdown-item" href="/posts?categoryName=자유">자유게시판</a>
           </div>
         </li>
         <!-- 이하 동일하게 Pricing, FAQs, About 등 추가 -->

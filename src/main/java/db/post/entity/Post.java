@@ -35,8 +35,8 @@ public class Post {
     @Type(type = "org.hibernate.type.TextType")
     private String post;
 
-    @Column(name = "post_date")
-    private LocalDate postDate;
+    @Column(name = "post_date", updatable = false)
+    private LocalDateTime postDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -54,7 +54,7 @@ public class Post {
 
     @PrePersist
     protected void onCreate() {
-        postDate = LocalDate.from(LocalDateTime.now());
+        postDate = LocalDateTime.from(LocalDateTime.now());
     }
 
 

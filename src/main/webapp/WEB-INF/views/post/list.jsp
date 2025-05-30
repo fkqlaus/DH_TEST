@@ -17,7 +17,8 @@
                     <div class="card-body">
                         <!-- 검색 폼 - 테이블 위에 배치 -->
                         <div class="mb-3">
-                            <form action="/posts/list" method="get" class="d-flex gap-2">
+                            <form action="/posts" method="get" class="d-flex gap-2">
+                                <input type="hidden" name="categoryName" value="${categoryName}" />
                                 <input type="text" name="searchTitle" class="form-control w-25"
                                        value="${searchTitle}" placeholder="제목 검색">
                                 <button type="submit" class="btn btn-primary">검색</button>
@@ -48,7 +49,7 @@
                                     <tr>
                                         <td>${post.postId}</td>
                                         <td style="text-align: center; padding-left: 24px; padding-right: 24px;">
-                                            <a href="/posts/detail?postId=${post.postId}">
+                                            <a href="/posts/${post.postId}?categoryName=${categoryName}">
                                                     ${post.postTitle}
                                             </a>
                                         </td>

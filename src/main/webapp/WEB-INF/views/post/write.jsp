@@ -8,36 +8,48 @@
     <!-- 헤더 include -->
     <jsp:include page="../layouts/space/header.jsp"/>
 
+    <!-- 메인 컨텐츠 -->
     <div class="container mt-5">
-        <h2 class="mb-4">게시글 작성</h2>
-        
-        <form>
+        <h2 class="mb-4">
+            <c:choose>
+                <c:when test="${not empty post}">게시글 수정</c:when>
+                <c:otherwise>게시글 작성</c:otherwise>
+            </c:choose>
+        </h2>
+
+        <form id="postForm">
+            <c:if test="${not empty post}">
+                <input type="hidden" name="id" value="${post.postId}">
+            </c:if>
             <div class="mb-3">
                 <label for="title" class="form-label">제목</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title" required value="${post.postTitle}" placeholder="제목을 입력하세요" >
             </div>
-
             <div class="mb-3">
                 <label for="post" class="form-label">내용</label>
-                <textarea class="form-control" id="summernote" name="post" rows="10" required></textarea>
+                <textarea class="form-control" id="summernote" name="post" rows="10" required>${post.post}</textarea>
             </div>
-
             <select class="form-select" id="category" name="categoryId" required>
                 <option value="">카테고리 선택</option>
                 <c:forEach var="category" items="${categories}">
-                    <option value="${category.id}">${category.categoryName}</option>
+                    <option value="${category.id}" <c:if test="${not empty post && post.categoryId == category.id}">selected</c:if>>
+                            ${category.categoryName}
+                    </option>
                 </c:forEach>
             </select>
-
             <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-secondary" onclick="location.href='/posts/list'">목록으로</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/posts'">목록으로</button>
                 <div>
-                    <button type="button" id="submitBtn" class="btn btn-primary">작성완료</button>
+                    <button type="button" id="submitBtn" class="btn btn-primary">
+                        <c:choose>
+                            <c:when test="${not empty post}">수정완료</c:when>
+                            <c:otherwise>작성완료</c:otherwise>
+                        </c:choose>
+                    </button>
                 </div>
             </div>
         </form>
     </div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->
@@ -91,21 +103,22 @@
             });
         }
 
-        // fetch로 폼 제출
         document.getElementById('submitBtn').addEventListener('click', async function(e) {
             e.preventDefault();
 
+            const isEdit = ${not empty post ? 'true' : 'false'};
             const title = document.getElementById('title').value.trim();
-            const content = $('#summernote').summernote('isEmpty');
+            const contentEmpty = $('#summernote').summernote('isEmpty');
             const post = $('#summernote').summernote('code');
             const categoryId = document.getElementById('category').value;
+            const postId = isEdit ? '${post.postId}' : null;
 
             if (!title) {
                 alert('제목을 입력해주세요.');
                 document.getElementById('title').focus();
                 return;
             }
-            if (content) {
+            if (contentEmpty) {
                 alert('내용을 입력해주세요.');
                 $('#summernote').summernote('focus');
                 return;
@@ -117,14 +130,15 @@
             }
 
             const formData = {
-                title: title,
+                postId: postId, // 수정 시 postId 포함
+                postTitle: title,
                 post: post,
                 categoryId: categoryId
             };
 
             try {
-                const response = await fetch('/api/posts/write', {
-                    method: 'POST',
+                const response = await fetch('/api/posts', {
+                    method: isEdit ? 'PUT' : 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -133,7 +147,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    window.location.href = '/posts/detail?postId=' + data.id;
+                    window.location.href = '/posts/' + (isEdit ? data.postId : data.id);
                 } else {
                     alert('게시글 저장에 실패했습니다.');
                 }

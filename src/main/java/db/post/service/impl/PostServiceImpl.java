@@ -5,7 +5,6 @@ import db.post.dto.PostDto;
 import db.post.entity.Post;
 import db.post.repository.PostRepository;
 import db.post.service.PostService;
-import db.user.entity.User;
 import db.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -25,18 +26,18 @@ public class PostServiceImpl implements PostService {
     private final CategoryService categoryService;
 
     @Override
-    public Page<Post> findPosts(String searchTitle, Pageable pageable) {
+    public Page<Post> findPosts(String searchTitle, Pageable pageable, String categoryName) {
 
         if (searchTitle != null && !searchTitle.isEmpty()) {
-            return postRepository.findByPostTitleContaining(searchTitle, pageable);
+//            return postRepository.findByPostTitleContaining(searchTitle, pageable);
+            return postRepository.findByPostTitleContainingAndCategory_CategoryName(searchTitle, categoryName, pageable);
         }
-        return postRepository.findAll(pageable);
+        return postRepository.findByCategory_CategoryName(categoryName, pageable);
     }
 
     @Override
-    public Post getPostById(Long id) {
-        return postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + id));
+    public PostDto getPostById(Long id) {
+        return convertToDto(postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + id)));
     }
 
     @Override
@@ -46,9 +47,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(PostDto postDto) {
-        Post post = postRepository.findById(postDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + postDto.getId()));
-        post.setPostTitle(postDto.getTitle());
+        Post post = postRepository.findById(postDto.getPostId())
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + postDto.getPostId()));
+        post.setPostTitle(postDto.getPostTitle());
         post.setPost(postDto.getPost());
         post.setPostDate(postDto.getPostDate());
         post.setCategory(categoryService.findById(postDto.getCategoryId()));
@@ -60,6 +61,14 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public Page<PostDto> findPostsbyCategoryId(Long Id, Pageable pageable) {
+        Page<Post> posts = postRepository.findByCategoryId(Id, pageable);
+
+        return posts.map(this::convertToDto);
+    }
+
+
 
     @Override
     @Transactional
@@ -69,8 +78,8 @@ public class PostServiceImpl implements PostService {
 
     private PostDto convertToDto(Post post) {
         PostDto postDto = new PostDto();
-        postDto.setId(post.getPostId());
-        postDto.setTitle(post.getPostTitle());
+        postDto.setPostId(post.getPostId());
+        postDto.setPostTitle(post.getPostTitle());
         postDto.setPost(post.getPost());
         postDto.setPostDate(post.getPostDate());
         postDto.setUserId(post.getUser().getUserId());
@@ -79,8 +88,8 @@ public class PostServiceImpl implements PostService {
 
     private Post convertToEntity(PostDto postDto) {
         Post post = new Post();
-        post.setPostId(postDto.getId());
-        post.setPostTitle(postDto.getTitle());
+        post.setPostId(postDto.getPostId());
+        post.setPostTitle(postDto.getPostTitle());
         post.setPost(postDto.getPost());
         post.setPostDate(postDto.getPostDate());
         post.setCategory(categoryService.findById(postDto.getCategoryId()));
