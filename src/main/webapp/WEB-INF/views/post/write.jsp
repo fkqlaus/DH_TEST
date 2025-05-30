@@ -159,6 +159,7 @@
         });
     </script>
 
+    <!-- TODO -->
     <script>
         function goToList() {
             if (document.referrer && document.referrer.includes('/posts')) {
