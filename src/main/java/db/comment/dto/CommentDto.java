@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Data
 @Getter
 @Setter
@@ -14,9 +16,9 @@ public class CommentDto {
     private String comment;
     private String userId;
     private Long postId;
-    private String commentDate;
+    private LocalDateTime commentDate;
 
-    public CommentDto(Long commentId, String comment, String userId, Long postId, String commentDate) {
+    public CommentDto(Long commentId, String comment, String userId, Long postId, LocalDateTime commentDate) {
         this.commentId = commentId;
         this.comment = comment;
         this.userId = userId;

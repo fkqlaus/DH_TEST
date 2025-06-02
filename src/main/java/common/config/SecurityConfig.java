@@ -20,19 +20,19 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/resources/**", "/", "/posts/**").permitAll()
+                .antMatchers("/login", "/register", "/resources/**", "/", "/posts/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("")
+                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll();
+                .logoutSuccessUrl("/login");
+
         return http.build();
     }
 

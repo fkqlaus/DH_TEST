@@ -38,7 +38,8 @@
                 </c:forEach>
             </select>
             <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-secondary" onclick="location.href='/posts'">목록으로</button>
+
+                <button type="button" class="btn btn-secondary" onclick="goToList()">이전으로</button>
                 <div>
                     <button type="button" id="submitBtn" class="btn btn-primary">
                         <c:choose>
@@ -111,6 +112,7 @@
             const contentEmpty = $('#summernote').summernote('isEmpty');
             const post = $('#summernote').summernote('code');
             const categoryId = document.getElementById('category').value;
+            const categoryName = document.getElementById('category').options[document.getElementById('category').selectedIndex].text;
             const postId = isEdit ? '${post.postId}' : null;
 
             if (!title) {
@@ -147,7 +149,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    window.location.href = '/posts/' + (isEdit ? data.postId : data.id);
+                    window.location.href = '/posts/' + (isEdit ? data.postId : data.id) + '?categoryName=' + categoryName;
                 } else {
                     alert('게시글 저장에 실패했습니다.');
                 }
@@ -155,6 +157,17 @@
                 alert('오류가 발생했습니다.');
             }
         });
+    </script>
+
+    <!-- TODO -->
+    <script>
+        function goToList() {
+            if (document.referrer && document.referrer.includes('/posts')) {
+                location.href = document.referrer;
+            } else {
+                location.href = '/posts';
+            }
+        }
     </script>
 
 
