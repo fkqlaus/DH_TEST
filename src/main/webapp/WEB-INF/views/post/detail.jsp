@@ -59,11 +59,24 @@
                                 <c:choose>
                                     <c:when test="${comments.totalElements > 0}">
                                         <c:forEach var="comment" items="${comments.content}">
-                                            <li class="list-group-item">
+                                            <li class="list-group-item position-relative">
+                                                <c:if test="${pageContext.request.userPrincipal.name == comment.userId || pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                                                    <div class="dropdown comment-menu">
+                                                        <button class="btn btn-link p-0 m-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position:absolute; right:8px; top:8px;">
+                                                            <svg width="24" height="24" fill="none" stroke="#888" stroke-width="2">
+                                                                <circle cx="7" cy="12" r="1.5"></circle>
+                                                                <circle cx="13" cy="12" r="1.5"></circle>
+                                                                <circle cx="19" cy="12" r="1.5"></circle>
+                                                            </svg>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="#" onclick="editComment('${comment.commentId}', '${comment.comment}'); return false;">수정</a>
+                                                            <a class="dropdown-item text-danger" href="#" onclick="deleteComment('${comment.commentId}'); return false;">삭제</a>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
                                                 <strong>${comment.userId}</strong>
-                                                <span class="text-muted small">
-                                                    (${comment.commentDate})
-                                                </span>
+                                                <span class="text-muted small">(${comment.commentDate})</span>
                                                 <div>${comment.comment}</div>
                                             </li>
                                         </c:forEach>
@@ -73,29 +86,21 @@
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
-                            <c:if test="${comments.totalPages > 0}">
-                                <ul class="pagination">
-                                    <c:forEach var="i" begin="0" end="${comments.totalPages - 1}">
-                                        <li class="page-item ${i == comments.number ? 'active' : ''}">
-                                            <a class="page-link"
-                                               href="?postId=${post.postId}&categoryName=${categoryName}&page=${i}&size=${comments.size}">
+                            <div style="text-align:center; margin-top:20px;">
+                                <c:if test="${comments.totalPages > 0}">
+                                    <div class="custom-pagination">
+                                        <c:forEach var="i" begin="0" end="${comments.totalPages - 1}">
+                                            <a href="?postId=${post.postId}&categoryName=${categoryName}&page=${i}&size=${comments.size}"
+                                               class="page-num${i == comments.number ? ' active' : ''}">
                                                     ${i + 1}
                                             </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </c:if>
-
-
-
+                                        </c:forEach>
+                                    </div>
+                                </c:if>
+                            </div>
                         </div>
-
-
-
                         <!-- 댓글 영역 끝 -->
                         <button type="button" class="btn btn-secondary" onclick="goToList()">목록으로</button>
-
-
                     </div>
                 </div>
             </section>
@@ -103,8 +108,6 @@
     </div>
 </main>
 
-<!-- Footer -->
-<c:import url="/WEB-INF/views/layouts/space/footer.jsp" />
 
 <sec:authorize access="isAuthenticated()">
     <script>
@@ -147,67 +150,9 @@
         location.href = '/posts/' + encodeURIComponent(postId) + '/edit';
     }
 </script>
-<%--<script>--%>
-<%--    function goToList() {--%>
-<%--        // JSP에서 파라미터 값을 EL로 받아옴 (없으면 빈 문자열)--%>
-<%--        const categoryName = '${categoryName}';--%>
-
-<%--        // 쿼리스트링 조합--%>
-<%--        let url = '/posts?categoryName=' + categoryName--%>
-<%--            // encodeURIComponent(categoryName);--%>
-
-
-<%--        location.href = url;--%>
-<%--        // return url;--%>
-<%--    }--%>
-<%--</script>--%>
-
 <script>
     <%--const postId = '${post.postId}';--%>
     console.log('postId!!!!:', postId);
-
-    // function loadComments(page = 0) {
-    //     fetch('/api/comments/' + postId)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             console.log('댓글 데이터:', data);
-    //             renderComments(data);
-    //         });
-    // }
-    <%--function formatCommentDate(arr) {--%>
-    <%--    if (!Array.isArray(arr) || arr.length < 3) return '';--%>
-    <%--    // arr: [year, month, day, hour, minute]--%>
-    <%--    const [y, m, d, h = 0, min = 0] = arr;--%>
-    <%--    return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')} ${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;--%>
-    <%--}--%>
-
-    <%--function renderComments(data) {--%>
-    <%--    let html = '<ul class="list-group mb-3">';--%>
-    <%--    if (Array.isArray(data.content) && data.content.length > 0) {--%>
-    <%--        data.content.forEach(comment => {--%>
-    <%--            html += `<li class="list-group-item">--%>
-    <%--            <strong>${comment.userId}</strong>--%>
-    <%--            <div>${comment.comment}</div>--%>
-    <%--        </li>`;--%>
-    <%--        });--%>
-    <%--    } else {--%>
-    <%--        html += '<li class="list-group-item text-muted">아직 댓글이 없습니다.</li>';--%>
-    <%--    }--%>
-    <%--    html += '</ul>';--%>
-
-    <%--    // 로그인 여부와 상관없이 폼 항상 추가--%>
-    <%--    html += `--%>
-    <%--    <form id="commentForm" class="d-flex gap-2" onsubmit="submitComment(event)">--%>
-    <%--        <input type="hidden" name="postId" value="${postId}" />--%>
-    <%--        <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" required />--%>
-    <%--        <button type="submit" class="btn btn-primary">댓글 작성!!</button>--%>
-    <%--    </form>--%>
-    <%--`;--%>
-
-    <%--    document.getElementById('comment-area').innerHTML = html;--%>
-    <%--}--%>
-
-
 
     function submitComment(e) {
         e.preventDefault();
@@ -222,14 +167,7 @@
             form.comment.value = '';
         });
     }
-
-    // 페이지 진입 시 최초 댓글 로딩
-    // document.addEventListener('DOMContentLoaded', () => loadComments());
 </script>
-
-
-
-
 <script>
     function goToList() {
         const lastUrl = sessionStorage.getItem('lastPostListUrl');
@@ -240,15 +178,10 @@
             location.href = '/posts?categoryName=' + encodeURIComponent('${categoryName}');
         }
     }
-    // function goToList() {
-    //     if (document.referrer && document.referrer.includes('/posts')) {
-    //         location.href = document.referrer;
-    //     } else {
-    //         location.href = '/posts';
-    //     }
-    // }
 </script>
 
+<!-- Footer -->
+<c:import url="/WEB-INF/views/layouts/space/footer.jsp" />
 
 </body>
 </html>
