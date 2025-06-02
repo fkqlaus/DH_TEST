@@ -73,18 +73,20 @@
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
-                            <ul class="pagination">
-                                <c:forEach var="i" begin="0" end="${comments.totalPages - 1}">
-                                    <li class="page-item ${i == comments.number ? 'active' : ''}">
-                                        <a class="page-link"
-                                           href="?postId=${post.postId}&categoryName=${categoryName}&page=${i}&size=${comments.size}">
-                                                ${i + 1}
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
+                            <c:if test="${comments.totalPages > 0}">
+                                <ul class="pagination">
+                                    <c:forEach var="i" begin="0" end="${comments.totalPages - 1}">
+                                        <li class="page-item ${i == comments.number ? 'active' : ''}">
+                                            <a class="page-link"
+                                               href="?postId=${post.postId}&categoryName=${categoryName}&page=${i}&size=${comments.size}">
+                                                    ${i + 1}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
 
-                            
+
 
                         </div>
 
