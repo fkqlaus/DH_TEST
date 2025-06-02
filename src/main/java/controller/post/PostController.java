@@ -1,6 +1,7 @@
 package controller.post;
 
 import db.category.service.CategoryService;
+import db.comment.service.CommentService;
 import db.post.dto.PostDto;
 import db.post.entity.Post;
 import db.post.service.PostService;
@@ -24,6 +25,7 @@ public class PostController {
 
     private final PostService postService;
     private final CategoryService categoryService;
+    private final CommentService commentService;
 
     @GetMapping("/posts")
     public String showBoardList(
@@ -60,14 +62,23 @@ public class PostController {
 
     // 게시판 글 상세 페이지
     @GetMapping("/posts/{postId}")
-    public String postDetail(@PathVariable("postId") Long postId, Model model, @RequestParam String categoryName) {
+    public String postDetail(@PathVariable("postId") Long postId, Model model, @RequestParam String categoryName, @RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "5") int size) {
         PostDto post = postService.getPostById(postId);
         log.info("categoryName: {}", categoryName);
+
+
+        PageRequest pageRequest = PageRequest.of(page, size,
+                Sort.by("commentId").ascending());
+
+
+
         if (post == null) {
             return "redirect:/posts?categotyName=" + categoryName; // 게시글이 없으면 게시판 목록으로 리다이렉트
         }
         model.addAttribute("categoryName", categoryName); // 카테고리 이름 유지
         model.addAttribute("post", post);
+        model.addAttribute("comments", commentService.getCommentsByPostId(postId, pageRequest)); // 댓글 정보 추가
         return "post/detail"; // post/detail.html로 이동
     }
 

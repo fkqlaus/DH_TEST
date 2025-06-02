@@ -20,6 +20,7 @@
             <a class="dropdown-item" href="/posts?categoryName=자유">자유게시판</a>
           </div>
         </li>
+
         <!-- 이하 동일하게 Pricing, FAQs, About 등 추가 -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pricingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

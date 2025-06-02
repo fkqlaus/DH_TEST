@@ -95,6 +95,8 @@
 
 <!-- Footer -->
 <c:import url="/WEB-INF/views/layouts/space/footer.jsp" />
-
+<script>
+    sessionStorage.setItem('lastPostListUrl', location.href);
+</script>
 </body>
 </html>
