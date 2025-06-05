@@ -1,67 +1,70 @@
-.b-example-divider {
-    height: 3rem;
-    background-color: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .15);
-    border-width: 1px 0;
-    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-.custom-header-padding {
-    padding-left: 200px !important;
-    padding-right: 200px !important;
-}
-.nav.mx-auto .nav-link {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
+/* 전체 헤더 영역 */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: transparent; /* or rgba(255,255,255,0.1) */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* 드롭다운 메뉴 간격 강제 적용 */
-.navbar-nav.mx-auto .nav-item {
-    margin: 0 1.5rem !important;
+/* 내부 컨테이너 (1920px 기준, 반응형 포함) */
+.container {
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.bi {
-    vertical-align: -.125em;
-    fill: currentColor;
+/* 로고 */
+.logo img {
+    height: 50px;
+    object-fit: contain;
 }
 
-.text-small {
-    font-size: 85%;
+/* 네비게이션 */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
 }
-.dropdown-toggle {
-    outline: 0;
+
+.main-nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 8px 0;
+    transition: color 0.2s ease;
 }
-/* 드롭다운 메뉴 스타일 */
-.dropdown-menu {
-    background-color: #ffffff; /* 배경색 */
-    border: 1px solid rgba(0, 0, 0, 0.15); /* 테두리 */
-    border-radius: 0.25rem; /* 모서리 둥글게 */
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* 그림자 */
-    padding: 0.5rem 0; /* 내부 여백 */
-    text-align: center;
+
+.main-nav a:hover {
+    color: #00bfff;
 }
-/* 드롭다운 항목 스타일 */
-.dropdown-item {
-    color: #212529; /* 텍스트 색상 */
-    padding: 0.5rem 1.5rem; /* 항목 여백 */
-    font-size: 0.9rem; /* 글꼴 크기 */
-    transition: background-color 0.2s ease-in-out; /* 배경색 전환 효과 */
+
+/* 햄버거 버튼 */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }
-.dropdown-item:hover {
-    background-color: #f8f9fa; /* 호버 시 배경색 */
-    color: #000; /* 호버 시 텍스트 색상 */
-}
-/* 드롭다운 옆에 화살표 없애기 */
-.dropdown-toggle::after {
-    display: none !important;
-}
-/* 드롭다운 구분선 스타일 */
-.dropdown-divider {
-    height: 1px;
-    margin: 0.5rem 0;
-    background-color: rgba(0, 0, 0, 0.1); /* 구분선 색상 */
-}
-/* 드롭다운 메뉴 위치 조정 마우스 움직일때 덜 사라지게*/
-.dropdown-menu {
-    margin-top: 0 !important;
+
+/* 반응형 (모바일 대응) */
+@media (max-width: 1024px) {
+    .main-nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
 }
 

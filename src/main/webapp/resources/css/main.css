@@ -1,131 +1,30 @@
-.nav-item.active .nav-link {
-    font-weight: bold;
-    color: #0056b3;
-}
-.navbar-toggler {
-    border-color: #007bff;
-}
-.navbar-toggler-icon {
-    background-image: url('data:image/svg+xml,...'); /* 커스텀 아이콘 */
-}
-
-.main-fixed {
-    width: 1200px;
-    max-width: 90%;
-}
-section.platform-menu-wrap {
-    position: relative;
-    float: left;
-    width: 220px;
-    height: calc(100vh - 60px);
-    z-index: 2;
-    background: #1f2744;
-    box-shadow: 5px 0px 5px 0px rgba(0,0,0,.45);
-    transition: .3s;
-}
-ul.main-menu-wrap {
-    position: relative;
+/* Hero 섹션 */
+.hero {
     width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-}
-ul.main-menu-wrap li {
-    width: 100%;
-    height: 50px; /* 메뉴 높이 */
-}
-ul.main-menu-wrap li a {
-    width: 100%;
-    height: 100%;
-    border-bottom: 1px solid #27305a;
-    font-size: 16px;
-    font-weight: 500;
-    color: #5e6a95;
-    background: #1f2744;
+    height: 860px; /* XD에서 추출한 높이 */
+    background: url('../images/14.png') no-repeat center center / cover;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 24px;
-    transition: .3s;
-    text-decoration: none;
-}
-ul.main-menu-wrap li a:hover,
-ul.main-menu-wrap li a.on {
-    color: #fff;
-    background: #30459c;
-}
-
-/* bxslider 전체 영역 스타일 */
-.bxslider {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 16px 0;
-    margin: 0 auto;
-    max-width: 600px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-}
-
-
-.bxslider li a {
-    display: block;
-    color: #30459c;
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 8px;
-}
-
-.bxslider li a:hover {
-    background: #e3e8fa;
-    color: #0056b3;
-}
-/* main.css에 추가 또는 수정 */
-.slider_wrap {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 32px 0;
-}
-.my_bxslider {
-    /* bxSlider가 내부적으로 width를 제어하므로 별도 스타일 불필요 */
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-.my_bxslider img {
-    width: 400px;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: relative;
+    padding-top: 80px; /* 헤더 높이만큼 여백 */
 }
 
-<!-- 이미지 위에 글자 올리기 -->
-.img-text-wrap {
-    position: relative;
-    display: block;
+.hero-overlay {
+    background: rgba(0,0,0,0.4); /* 텍스트 가독성용 어두운 오버레이 */
+    padding: 60px 40px;
+    text-align: left;
+    color: #fff;
+    max-width: 800px;
 }
-.img-text-wrap img {
-    display: block;
-    width: 100%;
-    height: auto;
+
+.hero-text h1 {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.4;
 }
-.img-caption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%; /* 중앙 정렬 */
-    transform: translateY(-50%);
-    color: #000000;
-    padding: 12px 0;
-    text-align: center;
-    font-size: 1.2rem;
-    border-radius: 0 0 12px 12px;
-    pointer-events: none; /* 클릭 방해 방지 */
+
+.hero-text p {
+    font-size: 16px;
+    margin-bottom: 16px;
 }
