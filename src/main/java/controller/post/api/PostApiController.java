@@ -23,19 +23,6 @@ public class PostApiController {
     private final PostService postService;
     private final CategoryService categoryService;
 
-//    @PostMapping("/posts")
-//    public ResponseEntity<?> writePost(@RequestBody PostDto post) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userId = authentication.getName();
-//        post.setUserId(userId);
-//
-//        PostDto savedPost = postService.savePost(post);
-//        log.info("savedPost: {}", savedPost);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(java.util.Collections.singletonMap("id", savedPost.getPostId()));
-//
-//    }
     @PostMapping("/posts")
     public ResponseEntity<?> writePost(@RequestBody PostDto post) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -72,8 +59,6 @@ public class PostApiController {
         post.setUserId(userId);
         return ResponseEntity.ok(postService.updatePost(post));
     }
-
-
 
 
 }

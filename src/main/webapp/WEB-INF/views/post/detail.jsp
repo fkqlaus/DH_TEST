@@ -90,7 +90,7 @@
                                 <c:if test="${comments.totalPages > 0}">
                                     <div class="custom-pagination">
                                         <c:forEach var="i" begin="0" end="${comments.totalPages - 1}">
-                                            <a href="?postId=${post.postId}&categoryName=${categoryName}&page=${i}&size=${comments.size}"
+                                            <a href="?categoryName=${categoryName}&page=${i}&size=${comments.size}"
                                                class="page-num${i == comments.number ? ' active' : ''}">
                                                     ${i + 1}
                                             </a>
@@ -151,6 +151,7 @@
     }
 </script>
 <script>
+
     <%--const postId = '${post.postId}';--%>
     console.log('postId!!!!:', postId);
 
@@ -163,10 +164,12 @@
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ postId, comment, userId })
         }).then(() => {
-            // loadComments(0);
+            window.location.href = '/posts/' + encodeURIComponent(postId) + '?categoryName=' + encodeURIComponent('${categoryName}');
             form.comment.value = '';
         });
+
     }
+
 </script>
 <script>
     function goToList() {
