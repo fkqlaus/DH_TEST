@@ -1,61 +1,43 @@
 package db.post.entity;
 
-import db.category.entity.Category;
-import db.comment.entity.Comment;
-import db.post_image.entity.Post_image;
-import db.user.entity.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Type;
+import db.attachment.entity.Attachment;
+import db.post_image.entity.PostImage;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "post")
-@Getter
-@Setter
-@NoArgsConstructor
+@Table(name = "Post")
 public class Post {
-
-
     @Id
-    @Column(name = "post_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(name = "post_title", length = 50)
+    @Column(name = "post_title", nullable = false, columnDefinition = "TEXT")
     private String postTitle;
 
-    @Column(name = "post")
-    @Type(type = "org.hibernate.type.TextType")
-    private String post;
+    @Column(name = "post_content", nullable = false, columnDefinition = "TEXT")
+    private String postContent;
 
-    @Column(name = "post_date")
-    private LocalDate postDate;
+    @Column(name = "post_view")
+    private Long postView = 0L;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false, length = 30)
+    private String userId;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    @Column(name = "password", nullable = false, length = 30)
+    private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Column(name = "post_date", nullable = false)
+    private LocalDateTime postDate;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post_image> postImages = new ArrayList<>();
+    private List<PostImage> images;
 
-    @PrePersist
-    protected void onCreate() {
-        postDate = LocalDate.from(LocalDateTime.now());
-    }
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attachment> attachments;
 
-
+    // getter, setter
 }

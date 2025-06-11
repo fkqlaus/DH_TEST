@@ -1,70 +1,43 @@
-/* 전체 헤더 영역 */
-.main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    background-color: transparent; /* or rgba(255,255,255,0.1) */
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+header {position:relative; top:0; left:0; width:100%; height:860px; border-bottom:1px solid #9b9181bd; overflow:hidden; transition:.3s; background-image: url("../images/header/header-bg.png") }
+header  {
+    display:flex; align-items:center; max-width:1920px; height:80px; margin:0 auto;position: relative;}
 
-/* 내부 컨테이너 (1920px 기준, 반응형 포함) */
-.container {
-    max-width: 1920px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* 로고 */
-.logo img {
+header .header-box{width: 100%; height: 80px position: relative; z-index: 20;}
+header .header-box .header-logo{
+    position: absolute;
+    top: 15px;
+    width: 168px;
     height: 50px;
-    object-fit: contain;
+    left: 120px;
 }
 
-/* 네비게이션 */
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 40px;
+
+header .header-box .header-logo a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background: url(../images/header/header-logo.png) 100% 100% no-repeat;
+    background-size: contain;
+    padding: 0;
 }
 
-.main-nav a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    font-size: 18px;
-    padding: 8px 0;
-    transition: color 0.2s ease;
-}
+header .header-box .header-menu
 
-.main-nav a:hover {
-    color: #00bfff;
-}
 
-/* 햄버거 버튼 */
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    color: white;
+
+
+
+.header-menu-icon {
+    position: relative; /* 또는 relative/fixed */
+
+    width: 36px;
+    height: 36px;
+    background: url(../images/header/ic_menu.svg) center center no-repeat padding-box;
+    background-size: contain;
+    border: none;
     cursor: pointer;
+    top: 22px;
+    right: 120px;
+
 }
-
-/* 반응형 (모바일 대응) */
-@media (max-width: 1024px) {
-    .main-nav {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-}
-

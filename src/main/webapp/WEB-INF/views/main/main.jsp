@@ -11,6 +11,6 @@
   <c:import url="/WEB-INF/views/layouts/main/head.jsp" />
   <body>
   <c:import url="/WEB-INF/views/layouts/main/header.jsp" />
-  
+
   </body>
 </html>
